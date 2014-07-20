@@ -45,7 +45,7 @@ To map the members of list using a callback function:
 
 	List<Long> numbers = map(entities, this, "doubleTheId");
 
-Now, numbers will have: [2, 4, 6], assuming the ids where [1, 2, 3]
+Assuming the ids where [1, 2, 3], numbers will have: [2, 4, 6].
 
 The callback should be implemented as this:
 
