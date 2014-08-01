@@ -3,10 +3,32 @@
 				 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 				 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>com.tek271.funj</groupId>
+	<groupId>com.tek271</groupId>
 	<artifactId>funj</artifactId>
 	<version>1.0-SNAPSHOT</version>
+	<packaging>jar</packaging>
 	<name>FunctionalJava</name>
+	<description>Collections and functional support</description>
+	<url>https://github.com/ahabra/funj.git</url>
+	<licenses>
+		<license>
+			<name>MIT License</name>
+			<url>http://opensource.org/licenses/MIT</url>
+			<distribution>repo</distribution>
+		</license>
+	</licenses>
+	<scm>
+		<url>https://github.com/ahabra/funj</url>
+		<connection>https://github.com/ahabra/funj</connection>
+	</scm>
+	<developers>
+		<developer>
+			<name>Abdul Habra</name>
+			<email>ahabra@yauoo.com</email>
+			<organizationUrl>http://www.tek271.com</organizationUrl>
+		</developer>
+	</developers>
+
 
 	<build>
 		<finalName>funj</finalName>
