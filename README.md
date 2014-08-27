@@ -2,7 +2,15 @@ funj
 ====
 
 Collections and functional tools to complete the missing parts of Java/Guava.
-I plan to make this project available on some public maven repo soon.
+
+To use with Maven:
+
+	<dependency>
+		<groupId>com.tek271</groupId>
+		<artifactId>funj</artifactId>
+		<version>1.0.0</version>
+	</dependency>
+
 
 Here is a list of some of the interesting parts:
 
