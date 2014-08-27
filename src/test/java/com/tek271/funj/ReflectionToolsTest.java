@@ -79,6 +79,16 @@ public class ReflectionToolsTest {
 	}
 
 	@Test
+	public void checkPropertiesExistChecksMultipleProperties() {
+		ReflectionTools.checkPropertiesExist(zoo, "id", "city");
+	}
+
+	@Test(expected = IllegalArgumentException.class)
+	public void checkPropertiesFailsIfAnyPropertyNameDoesNotExist() {
+		ReflectionTools.checkPropertiesExist(zoo, "id", "cityXX");
+	}
+
+	@Test
 	public void callStaticCallsSimpleMethodWithNoArgs() {
 		Properties actual = ReflectionTools.callStatic("System.getProperties");
 		assertEquals(System.getProperties(), actual);

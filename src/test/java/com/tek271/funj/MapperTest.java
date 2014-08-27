@@ -4,9 +4,11 @@ import com.google.common.collect.Lists;
 import org.junit.Test;
 
 import java.util.List;
+import java.util.Map;
 
 import static com.google.common.collect.Lists.newArrayList;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 public class MapperTest {
 	private static final String NOT_EXIST = "propertyNameWhichDoesNotExist";
@@ -57,6 +59,32 @@ public class MapperTest {
 	public void mapWillReturnsListOfMappedValues() {
 		List<String> mapped = Mapper.map(zoos, this, "catColor");
 		assertEquals(newArrayList("color_1", "color_2","color_3","color_4"), mapped);
+	}
+
+	@Test
+	public void pluckKeyAndValueReturnsEmptyIfNoData() {
+		assertTrue( Mapper.pluckKeyAndValue(null, "k", "v").isEmpty() );
+	}
+
+	@Test(expected = IllegalArgumentException.class)
+	public void pluckKeyAndValueRequiresKeyPropertyName() {
+		Mapper.pluckKeyAndValue(Lists.newArrayList(1, 2), null, "x");
+	}
+
+	@Test(expected = IllegalArgumentException.class)
+	public void pluckKeyAndValueRequiresValuePropertyName() {
+		Mapper.pluckKeyAndValue(Lists.newArrayList(1, 2), "x", null);
+	}
+
+	@Test
+	public void pluckKeyAndValueReturnsMapOfKeyAndValue() {
+		Map<String, Zoo.Cat> map = Mapper.pluckKeyAndValue(zoos, "city", "cat");
+
+		assertEquals(zoos.size(), map.size());
+		assertEquals(z1.cat, map.get(z1.getCity()));
+		assertEquals(z2.cat, map.get(z2.getCity()));
+		assertEquals(z3.cat, map.get(z3.getCity()));
+		assertEquals(z4.cat, map.get(z4.getCity()));
 	}
 
 	@SuppressWarnings("UnusedDeclaration")

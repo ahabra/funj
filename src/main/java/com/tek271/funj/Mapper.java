@@ -1,10 +1,14 @@
 package com.tek271.funj;
 
+import com.google.common.collect.Maps;
+
 import java.util.List;
+import java.util.Map;
 
 import static com.google.common.collect.Lists.newArrayList;
 import static com.tek271.funj.CollectionTools.isEmpty;
 import static com.tek271.funj.ReflectionTools.*;
+import static com.tek271.funj.ReflectionTools.checkPropertyExists;
 
 public class Mapper {
 
@@ -26,6 +30,24 @@ public class Mapper {
 		}
 
 		return plucked;
+	}
+
+	public static <OBJ, K, V> Map<K, V> pluckKeyAndValue(Iterable<OBJ> iterable,
+																											 String keyPropertyName,
+																											 String valuePropertyName) {
+		Map<K, V> map = Maps.newHashMap();
+		if (isEmpty(iterable)) {
+			return map;
+		}
+		checkPropertiesExist(iterable, keyPropertyName, valuePropertyName);
+
+		for (OBJ obj: iterable) {
+			K k = getPropertyValue(obj, keyPropertyName);
+			V v = getPropertyValue(obj, valuePropertyName);
+			map.put(k, v);
+		}
+
+		return map;
 	}
 
 	/**

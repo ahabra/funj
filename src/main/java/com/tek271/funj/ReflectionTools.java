@@ -50,6 +50,12 @@ public class ReflectionTools {
 		getPropertyValue(obj, propertyName);
 	}
 
+	public static <OBJ> void checkPropertiesExist(OBJ obj, String... propertyNames) {
+		for (String propertyName: propertyNames) {
+			getPropertyValue(obj, propertyName);
+		}
+	}
+
 	/**
 	 * Check if the 1st item in the iterable has the given propertyName
 	 * @param iterable some objects
@@ -59,6 +65,10 @@ public class ReflectionTools {
 	 */
 	public static <OBJ> void checkPropertyExists(Iterable<OBJ> iterable, String propertyName) {
 		getPropertyValue(iterable.iterator().next(), propertyName);
+	}
+
+	public static <OBJ> void checkPropertiesExist(Iterable<OBJ> iterable, String... propertyNames) {
+		checkPropertiesExist(iterable.iterator().next(), propertyNames);
 	}
 
 	@SuppressWarnings("unchecked")
