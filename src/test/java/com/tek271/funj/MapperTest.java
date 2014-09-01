@@ -52,29 +52,6 @@ public class MapperTest {
 	}
 
 	@Test
-	public void mapWithStaticCallbackFullNameReturnsListOfMappedValues() {
-		List<Integer> mapped = Mapper.map(zoos, this.getClass().getName() + ".mapZooId");
-		assertEquals(newArrayList(10, 20, 30, 40), mapped);
-	}
-
-	@SuppressWarnings("UnusedDeclaration")
-	public static int mapZooId(Zoo zoo) {
-		return zoo.id * 10;
-	}
-
-	@Test
-	public void mapWithStaticCallbackReturnsListOfMappedValues() {
-		List<Integer> mapped = Mapper.map(zoos, this.getClass(), "mapZooId");
-		assertEquals(newArrayList(10, 20, 30, 40), mapped);
-	}
-
-	@Test
-	public void mapWillReturnsListOfMappedValues() {
-		List<String> mapped = Mapper.map(zoos, this, "catColor");
-		assertEquals(newArrayList("color_1", "color_2","color_3","color_4"), mapped);
-	}
-
-	@Test
 	public void pluckKeyAndValueReturnsEmptyIfNoData() {
 		assertTrue( Mapper.pluckKeyAndValue(null, "k", "v").isEmpty() );
 	}
@@ -98,6 +75,29 @@ public class MapperTest {
 		assertEquals(z2.cat, map.get(z2.getCity()));
 		assertEquals(z3.cat, map.get(z3.getCity()));
 		assertEquals(z4.cat, map.get(z4.getCity()));
+	}
+
+	@Test
+	public void mapWithStaticCallbackFullNameReturnsListOfMappedValues() {
+		List<Integer> mapped = Mapper.map(zoos, this.getClass().getName() + ".mapZooId");
+		assertEquals(newArrayList(10, 20, 30, 40), mapped);
+	}
+
+	@SuppressWarnings("UnusedDeclaration")
+	public static int mapZooId(Zoo zoo) {
+		return zoo.id * 10;
+	}
+
+	@Test
+	public void mapWithStaticCallbackReturnsListOfMappedValues() {
+		List<Integer> mapped = Mapper.map(zoos, this.getClass(), "mapZooId");
+		assertEquals(newArrayList(10, 20, 30, 40), mapped);
+	}
+
+	@Test
+	public void mapWillReturnsListOfMappedValues() {
+		List<String> mapped = Mapper.map(zoos, this, "catColor");
+		assertEquals(newArrayList("color_1", "color_2","color_3","color_4"), mapped);
 	}
 
 	@SuppressWarnings("UnusedDeclaration")
