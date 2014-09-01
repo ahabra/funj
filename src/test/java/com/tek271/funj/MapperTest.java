@@ -1,12 +1,15 @@
 package com.tek271.funj;
 
 import com.google.common.collect.Lists;
+import com.google.common.collect.Sets;
 import org.junit.Test;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import static com.google.common.collect.Lists.newArrayList;
+import static com.tek271.funj.Zoo.Cat;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
@@ -36,6 +39,16 @@ public class MapperTest {
 	public void pluckExtractsGivenProperty() {
 		List<Integer> list = Mapper.pluck(zoos, "id");
 		assertEquals(Lists.newArrayList(1, 2, 3, 4), list);
+	}
+
+	@Test
+	public void pluckToSet_ReturnsSetOfExtractedValues() {
+		Cat cat1 = Cat.create(1, "black");
+		Cat cat2 = Cat.create(2, "gold");
+		Cat cat3 = Cat.create(3, "black");
+		List<Cat> cats = newArrayList(cat1, cat2, cat3);
+		Set<String> set = Mapper.pluckToSet(cats, "color");
+		assertEquals(Sets.newHashSet("gold", "black"), set);
 	}
 
 	@Test
@@ -78,7 +91,7 @@ public class MapperTest {
 
 	@Test
 	public void pluckKeyAndValueReturnsMapOfKeyAndValue() {
-		Map<String, Zoo.Cat> map = Mapper.pluckKeyAndValue(zoos, "city", "cat");
+		Map<String, Cat> map = Mapper.pluckKeyAndValue(zoos, "city", "cat");
 
 		assertEquals(zoos.size(), map.size());
 		assertEquals(z1.cat, map.get(z1.getCity()));

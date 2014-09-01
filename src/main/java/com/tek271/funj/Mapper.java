@@ -1,14 +1,15 @@
 package com.tek271.funj;
 
 import com.google.common.collect.Maps;
+import com.google.common.collect.Sets;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import static com.google.common.collect.Lists.newArrayList;
 import static com.tek271.funj.CollectionTools.isEmpty;
 import static com.tek271.funj.ReflectionTools.*;
-import static com.tek271.funj.ReflectionTools.checkPropertyExists;
 
 public class Mapper {
 
@@ -30,6 +31,19 @@ public class Mapper {
 		}
 
 		return plucked;
+	}
+
+	/**
+	 * Extract a Set of property values from a list of objects
+	 * @param iterable list of objects
+	 * @param propertyName name of property to extract
+	 * @param <OBJ> Generic type of the objects in the iterable
+	 * @param <PROP> Generic type of property
+	 * @return Set of type PROP of the extracted property values
+	 */
+	public static <OBJ, PROP> Set<PROP> pluckToSet(Iterable<OBJ> iterable, String propertyName) {
+		List<PROP> list = pluck(iterable, propertyName);
+		return Sets.newHashSet(list);
 	}
 
 	public static <OBJ, K, V> Map<K, V> pluckKeyAndValue(Iterable<OBJ> iterable,
