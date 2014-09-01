@@ -53,7 +53,7 @@ public class MapperTest {
 
 	@Test
 	public void pluckKeyAndValueReturnsEmptyIfNoData() {
-		assertTrue( Mapper.pluckKeyAndValue(null, "k", "v").isEmpty() );
+		assertTrue(Mapper.pluckKeyAndValue(null, "k", "v").isEmpty());
 	}
 
 	@Test(expected = IllegalArgumentException.class)
@@ -103,6 +103,17 @@ public class MapperTest {
 	@SuppressWarnings("UnusedDeclaration")
 	public String catColor(Zoo zoo) {
 		return zoo.cat.color;
+	}
+
+	@Test
+	public void mapWillPassExtraArgumentsToDynamicCallback() {
+		List<String> mapped = Mapper.map(zoos, this, "addSuffixToCity", "US");
+		assertEquals(newArrayList("city_1-US", "city_2-US","city_3-US","city_4-US"), mapped);
+	}
+
+	@SuppressWarnings("UnusedDeclaration")
+	public String addSuffixToCity(Zoo zoo, String suffix) {
+		return zoo.getCity() + "-" + suffix;
 	}
 
 }

@@ -111,22 +111,22 @@ Mapper
 
 **map**: Map members of a list using a callback function:
 
-Suppose that we have 3 cats with prices 10, 11, and 12. Also suppose that we
+Suppose that we have 3 cats with prices 10, 12, and 15. Also suppose that we
 have this *callback* function:
 
 ```Java
-	long doubleThePrice(Cat cat) {
-		return cat.price * 2;
+	int doubleThePrice(Cat cat, int maxPrice) {
+		return Math.min(cat.price * 2, maxPrice) ;
 	}
 ```
 
-If you call `map()` as this:
+If you call `map()` like this:
 
 ```Java
-	List<Integer> prices = map(cats, this, "doubleThePrice");
+	List<Integer> prices = map(cats, this, "doubleThePrice", 25);
 ```
 
-The prices list will be: [20, 22, 24].
+The prices list will be: [20, 24, 25].
 
 *Note The `map()` method is overloaded to support both static and dynamic callback
 methods.*

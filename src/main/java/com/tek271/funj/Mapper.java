@@ -3,6 +3,7 @@ package com.tek271.funj;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -10,6 +11,7 @@ import java.util.Set;
 import static com.google.common.collect.Lists.newArrayList;
 import static com.tek271.funj.CollectionTools.isEmpty;
 import static com.tek271.funj.ReflectionTools.*;
+import static com.tek271.funj.ReflectionTools.callStatic;
 
 public class Mapper {
 
@@ -74,13 +76,9 @@ public class Mapper {
 	 * @param <OUT> Generic type of the mapped values
 	 * @return List of mapped values.
 	 */
-	public static <IN, OUT> List<OUT> map(Iterable<IN> iterable, String staticCallbackFullName) {
-		List<OUT> list = newArrayList();
-		for (IN i: iterable) {
-			OUT mapped = callStatic(staticCallbackFullName, i);
-			list.add(mapped);
-		}
-		return list;
+	public static <IN, OUT> List<OUT> map(Iterable<IN> iterable, String staticCallbackFullName,
+																				Object... extraArgs) {
+		return doMap(iterable, null, staticCallbackFullName, extraArgs);
 	}
 
 	/**
@@ -94,9 +92,10 @@ public class Mapper {
 	 * @param <OUT> Generic type of the mapped values
 	 * @return List of mapped values.
 	 */
-	public static <IN, OUT> List<OUT> map(Iterable<IN> iterable, Class cls, String staticCallback) {
+	public static <IN, OUT> List<OUT> map(Iterable<IN> iterable, Class cls, String staticCallback,
+																				Object... extraArgs) {
 		String fullName = cls.getName() + "." + staticCallback;
-		return map(iterable, fullName);
+		return doMap(iterable, null, fullName, extraArgs);
 	}
 
 	/**
@@ -104,19 +103,44 @@ public class Mapper {
 	 * in the iterable
 	 * @param iterable list of objects
 	 * @param context The context (object) which contains the callback
-	 * @param callback name of a function which is a member of context. The function must have a single
-	 *                 argument of type IN and return a value of type OUT
+	 * @param callback name of a function which is a member of context.
+	 *        The function must have at least single argument of type IN and return a value of type OUT.
+	 *        The function may have other arguments which will use the extraArgs param.
+	 * @param extraArgs extra arguments to be passed to the callback function
 	 * @param <IN> Generic type of objects to be mapped
 	 * @param <OUT> Generic type of the mapped values
 	 * @return List of mapped values.
 	 */
-	public static <IN, OUT> List<OUT> map(Iterable<IN> iterable, Object context, String callback) {
+	public static <IN, OUT> List<OUT> map(Iterable<IN> iterable, Object context, String callback,
+																				Object... extraArgs) {
+		return doMap(iterable, context, callback, extraArgs);
+	}
+
+	private static <IN, OUT> List<OUT> doMap(Iterable<IN> iterable, Object context, String callback,
+																					 Object... extraArgs) {
 		List<OUT> list = newArrayList();
+
 		for (IN i: iterable) {
-			OUT mapped = callMethod(context, callback, i);
+			Object[] args = join(i, extraArgs);
+			OUT mapped = call(context, callback, args);
 			list.add(mapped);
 		}
 		return list;
+	}
+
+	private static <OUT> OUT call(Object context, String callback, Object... args) {
+		if (context == null) {
+			return callStatic(callback, args);
+		}
+		return callMethod(context, callback, args);
+	}
+
+	private static Object[] join(Object first, Object[] extraArgs) {
+		final int length = extraArgs.length;
+		extraArgs = Arrays.copyOf(extraArgs, length + 1);
+		System.arraycopy(extraArgs, 0, extraArgs, 1, length);
+		extraArgs[0] = first;
+		return extraArgs;
 	}
 
 }
