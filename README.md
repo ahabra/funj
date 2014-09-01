@@ -38,7 +38,7 @@ Notes
 
 CollectionTools
 ---------------
-**toMap**: To convert a collection to a map using one of collection's items properties
+**toMap**: Convert a collection to a map using one of collection's items properties
 as a key:
 
 ```Java
@@ -48,13 +48,13 @@ as a key:
 
 Now the key in map is the id of Cat, while the value is the Cat object.
 
-**toMultimap**: But suppose you want to group cats by something which is not unique:
+**toMultimap**: Group a collection by a property which is not unique:
 
 ```Java
 	com.google.common.collect.Multimap<String, Cat> multimap = toMultimap(cats, "color");
 ```
 
-To check if a collection is null or empty:
+**isEmpty**: Check if a collection is null or empty:
 
 ```Java
 	isEmpty(cats)
@@ -62,7 +62,7 @@ To check if a collection is null or empty:
 
 Finder
 ------
-**findAll**: To find a list of objects with a matching property value:
+**findAll**: Find a list of objects with a matching property value:
 
 ```Java
 	List<Cat> foundList = findAll(cats, "id", 1, 2);
@@ -71,7 +71,7 @@ Finder
 will find cats whose id is either 1 or 2.
 
 
-**findFirst**: However, to find the first object with a matching value of a property:
+**findFirst**: Find the first object with a matching value of a property:
 
 ```Java
 	Cat found = findFirst(cats, "name", "tom");
@@ -82,25 +82,25 @@ will find the cat whose name property equals "tom"
 
 Mapper
 ------
-**pluck**: To extract/pluck a property from a list of cats:
+**pluck**: Extract/pluck a property from a list of cats:
 
 ```Java
 	List<Long> ids = pluck(cats, "id");
 ```
 
-**pluckToSet**: To extract/pluck a property from a list of cats and return a Set:
+**pluckToSet**: Extract/pluck a property from a list of cats and return a Set:
 
 ```Java
 	Set<String> colors = pluckToSet(cats, "color");
 ```
 
-**pluckKeyAndValue**: To extract/pluck a key and value from a list of cats and create a map:
+**pluckKeyAndValue**: Extract/pluck a key and value from a list of cats and create a map:
 
 ```Java
 	Map<Long, String> idsAndColors = pluckKeyAndValue(cats, "id", "color");
 ```
 
-**map**: To map members of a list using a callback function:
+**map**: Map members of a list using a callback function:
 
 Suppose that we have 3 cats with prices 10, 11, and 12. Also suppose that we
 have this *callback* function:
@@ -117,7 +117,7 @@ If you call `map()` as this:
 	List<Integer> prices = map(cats, this, "doubleThePrice");
 ```
 
-The prices list will have: [20, 22, 24].
+The prices list will be: [20, 22, 24].
 
 *Note The `map()` method is overloaded to support both static and dynamic callback
 methods.*
