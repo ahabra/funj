@@ -91,7 +91,7 @@ To extract/pluck a property from a list of cats:
 To extract/pluck a property from a list of cats and return a Set:
 
 ```Java
-	Set<Long> colors = pluckToSet(cats, "color");
+	Set<String> colors = pluckToSet(cats, "color");
 ```
 
 To extract/pluck a key and value from a list of cats and create a map:
