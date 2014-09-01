@@ -12,52 +12,82 @@ To use with Maven:
 	</dependency>
 
 
-Here is a list of some of the interesting parts:
+For the examples given below, suppose we have a class *Cat*
+
+```Java
+	class Cat {
+		public long id;
+		public String name;
+		public int price;
+		private String color;
+		public String getColor() { return color; }
+		public void setColor(String color) { this.color = color; }
+	}
+```
+
+Additionally, suppose that we have a method `getCats()` which returns a list
+of `Cat`s.
+
+**Note:** This library can access either properties with getters/setters or fields
+by name directly.
 
 CollectionTools
 ---------------
+To convert a collection to a map using one of collection's items properties
+as a key:
 
-Let SomeEntity be a class with a property/field/getter named "id" of type long, and
-a property "name" of type String.
+	List<Cat> cats = getCats();
+	Map<Long, Cat> map = toMap(cats, "id");
 
-	List<SomeEntity> entities = getEntities();
-	Map<Long, SomeEntity> map = toMap(entities, "id");
+Now the key in map is the id of Cat, while the value is the Cat object.
 
-Now the key in map is the id of SomeEntity, while the value is the SomeEntity object.
+But suppose you want to group cats by something which is not unique:
 
-Now suppose you want to group entities by something which is not unique:
+	com.google.common.collect.Multimap<String, Cat> multimap = toMultimap(cats, "color");
 
-	Multimap<String, SomeEntity> toMultimap(entities, "name");
+To check if a collection is null or empty:
+
+	isEmpty(cats)
 
 
 Finder
 ------
 To find a list of objects with a matching property value:
 
-	List<SomeEntity> foundList = findAll(entities, "id", 1, 2)
+	List<Cat> foundList = findAll(cats, "id", 1, 2);
 
-Will find entities whose id is either 1 or 2
+Will find cats whose id is either 1 or 2.
 
-	SomeEntity found = findFirst(entities, "name", "joe")
+	Cat found = findFirst(cats, "name", "tom");
 
-Will find the entity whose name property equals "joe"
+Will find the cat whose name property equals "tom"
 
 
 Mapper
 ------
-To extract/pluck a property from a list of entities:
+To extract/pluck a property from a list of cats:
 
-	List<Long> ids = pluck(entities, "id");
+	List<Long> ids = pluck(cats, "id");
 
-To map the members of list using a callback function:
+To extract/pluck a key and value from a list of cats and create a map:
 
-	List<Long> numbers = map(entities, this, "doubleTheId");
+	Map<Long, String> idsAndColors = pluckKeyAndValue(cats, "id", "color");
 
-Assuming the ids where [1, 2, 3], numbers will have: [2, 4, 6].
+To map members of a list using a callback function:
 
-The callback should be implemented as this:
+Suppose that we have 3 cats with prices 10, 11, and 12. Also suppose that we
+have this *callback* function:
 
-	long doubleTheId(SomeEntity entity) {
-		return entity.id * 2;
+	long doubleThePrice(Cat cat) {
+		return cat.price * 2;
 	}
+
+If you call `map()` as this:
+
+	List<Integer> prices = map(cats, this, "doubleThePrice");
+
+The prices list will have: [20, 22, 24].
+
+**Note** The `map()` method is overloaded to support both static and dynamic callback
+methods.
 
