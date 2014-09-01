@@ -47,4 +47,16 @@ public class FinderTest {
 		assertEquals(null, Finder.findFirst(zoos, "id", "invalid filter"));
 	}
 
+	@Test
+	public void rejectWillExcludeMatchingObjects() {
+		List<Zoo> found = Finder.reject(zoos, "id", 1, 2);
+		assertEquals(newArrayList(z3, z4), found);
+	}
+
+	@Test
+	public void rejectWillReturnOriginalListIfNoMatchers() {
+		List<Zoo> found = Finder.reject(zoos, "id");
+		assertEquals(zoos, found);
+	}
+
 }

@@ -79,6 +79,15 @@ will find cats whose id is either 1 or 2.
 
 will find the cat whose name property equals "tom"
 
+**reject**: Return a list of objects whose value for propertyName is NOT
+any of the filter values
+
+```Java
+	List<Cat> foundList = reject(cats, "name", "tom", "gar");
+```
+
+will find cats whose names is not "tom" nor "gar".
+
 
 Mapper
 ------
