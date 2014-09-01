@@ -5,12 +5,13 @@ Collections and functional tools to complete the missing parts of Java/Guava.
 
 To use with Maven:
 
+```XML
 	<dependency>
 		<groupId>com.tek271</groupId>
 		<artifactId>funj</artifactId>
 		<version>1.0.0</version>
 	</dependency>
-
+```
 
 For the examples given below, suppose we have a class *Cat*
 
