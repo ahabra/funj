@@ -3,7 +3,6 @@ package com.tek271.funj;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -11,7 +10,6 @@ import java.util.Set;
 import static com.google.common.collect.Lists.newArrayList;
 import static com.tek271.funj.CollectionTools.isEmpty;
 import static com.tek271.funj.ReflectionTools.*;
-import static com.tek271.funj.ReflectionTools.callStatic;
 
 public class Mapper {
 
@@ -121,7 +119,7 @@ public class Mapper {
 		List<OUT> list = newArrayList();
 
 		for (IN i: iterable) {
-			Object[] args = join(i, extraArgs);
+			Object[] args = ArrayTools.concat(i, extraArgs);
 			OUT mapped = call(context, callback, args);
 			list.add(mapped);
 		}
@@ -133,14 +131,6 @@ public class Mapper {
 			return callStatic(callback, args);
 		}
 		return callMethod(context, callback, args);
-	}
-
-	private static Object[] join(Object first, Object[] extraArgs) {
-		final int length = extraArgs.length;
-		extraArgs = Arrays.copyOf(extraArgs, length + 1);
-		System.arraycopy(extraArgs, 0, extraArgs, 1, length);
-		extraArgs[0] = first;
-		return extraArgs;
 	}
 
 }
