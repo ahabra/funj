@@ -28,8 +28,12 @@ For the examples given below, suppose we have a class *Cat*
 Additionally, suppose that we have a method `getCats()` which returns a list
 of `Cat`s.
 
-**Note:** This library can access either properties with getters/setters or fields
-by name directly.
+Notes
+-----
+
+1. You can access either getters/setters properties or fields by name directly.
+2. You can access **nested** properties and fields.
+
 
 CollectionTools
 ---------------
@@ -63,13 +67,16 @@ To find a list of objects with a matching property value:
 	List<Cat> foundList = findAll(cats, "id", 1, 2);
 ```
 
-Will find cats whose id is either 1 or 2.
+will find cats whose id is either 1 or 2.
+
+
+However, to find the first object with a matching value of a property:
 
 ```Java
 	Cat found = findFirst(cats, "name", "tom");
 ```
 
-Will find the cat whose name property equals "tom"
+will find the cat whose name property equals "tom"
 
 
 Mapper
