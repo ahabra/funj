@@ -13,7 +13,7 @@ To use with Maven:
 	</dependency>
 ```
 
-The maven repo has the latest production version, while the latest code is
+The maven central repo http://search.maven.org has the latest production version, while the latest code is
 in https://github.com/ahabra/funj
 
 For the examples given below, suppose we have a class *Cat*
