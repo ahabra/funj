@@ -84,12 +84,18 @@ public class TransformerTest {
 				.dynamicContext(this)
 				.functionName("colorOfCat");
 
+		StepFunction colorFilter = StepFunction.create()
+				.dynamicContext(this)
+				.functionName("isNiceColor")
+				.filterFunction(true)
+				.extraArgs("color_1");
+
 		Transformer transformer = Transformer.create();
-		transformer.addSteps(catOfZoo, colorOfCat);
+		transformer.addSteps(catOfZoo, colorOfCat, colorFilter);
 
 		List<String> transformed = transformer.apply(zoos);
 
-		List<String> expected = newArrayList("color_1", "color_2", "color_3", "color_4");
+		List<String> expected = newArrayList("color_1", "color_4");
 		assertEquals(expected, transformed);
 	}
 
@@ -123,6 +129,11 @@ public class TransformerTest {
 	@SuppressWarnings("UnusedDeclaration")
 	public String colorOfCat(Cat cat) {
 		return cat.color;
+	}
+
+	@SuppressWarnings("UnusedDeclaration")
+	public boolean isNiceColor(String color, String specialColor) {
+		return color.equals(specialColor) || color.endsWith("4");
 	}
 
 
