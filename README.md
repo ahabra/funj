@@ -118,7 +118,7 @@ Suppose that we have 3 cats with prices 10, 12, and 15. Also suppose that we
 have this *callback* function:
 
 ```Java
-	int doubleThePrice(Cat cat, int maxPrice) {
+	public int doubleThePrice(Cat cat, int maxPrice) {
 		return Math.min(cat.price * 2, maxPrice) ;
 	}
 ```
