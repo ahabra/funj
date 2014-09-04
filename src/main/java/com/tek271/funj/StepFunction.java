@@ -9,8 +9,7 @@ public class StepFunction {
 	private String functionName;
 	private Object[] extraArgs;
 	private boolean isIgnoreNulls;
-	private boolean isFilter;
-
+	private FunctionType functionType = FunctionType.MAP;
 
 	public static StepFunction create() {
 		return new StepFunction();
@@ -55,13 +54,13 @@ public class StepFunction {
 		return isIgnoreNulls;
 	}
 
-	public StepFunction filterFunction(boolean isFilter) {
-		this.isFilter = isFilter;
+	public StepFunction functionType(FunctionType functionType) {
+		this.functionType = functionType;
 		return this;
 	}
 
-	public boolean isFilterFunction() {
-		return this.isFilter;
+	public FunctionType getFunctionType() {
+		return this.functionType;
 	}
 
 	private <OUT> OUT call(Object[] args) {

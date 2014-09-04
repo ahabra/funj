@@ -5,6 +5,8 @@ import org.junit.Test;
 import java.util.List;
 
 import static com.google.common.collect.Lists.newArrayList;
+import static com.tek271.funj.FunctionType.FILTER;
+import static com.tek271.funj.FunctionType.MAP;
 import static com.tek271.funj.Zoo.Cat;
 import static org.junit.Assert.assertEquals;
 
@@ -20,6 +22,7 @@ public class TransformerTest {
 	public void simpleTransform() {
 		StepFunction fun = StepFunction.create()
 				.staticClass(this.getClass())
+				.functionType(MAP)
 				.functionName("mapZooId");
 
 		Transformer transformer = Transformer.create();
@@ -87,7 +90,7 @@ public class TransformerTest {
 		StepFunction colorFilter = StepFunction.create()
 				.dynamicContext(this)
 				.functionName("isNiceColor")
-				.filterFunction(true)
+				.functionType(FILTER)
 				.extraArgs("color_1");
 
 		Transformer transformer = Transformer.create();
