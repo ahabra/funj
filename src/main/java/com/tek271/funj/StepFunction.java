@@ -2,6 +2,8 @@ package com.tek271.funj;
 
 import com.google.common.annotations.Beta;
 
+import java.util.List;
+
 import static com.tek271.funj.ReflectionTools.callMethod;
 import static com.tek271.funj.ReflectionTools.callStatic;
 
@@ -12,7 +14,7 @@ public class StepFunction {
 	private String functionName;
 	private Object[] extraArgs;
 	private boolean isIgnoreNulls;
-	private FunctionType functionType = FunctionType.MAP;
+	private TransformType transformType = TransformType.MAP;
 
 	public static StepFunction create() {
 		return new StepFunction();
@@ -57,13 +59,9 @@ public class StepFunction {
 		return isIgnoreNulls;
 	}
 
-	public StepFunction functionType(FunctionType functionType) {
-		this.functionType = functionType;
+	public StepFunction transformType(TransformType transformType) {
+		this.transformType = transformType;
 		return this;
-	}
-
-	public FunctionType getFunctionType() {
-		return this.functionType;
 	}
 
 	private <OUT> OUT call(Object[] args) {
@@ -79,5 +77,8 @@ public class StepFunction {
 		return call(args);
 	}
 
+	public <IN, OUT> List<OUT> apply(Iterable<IN> iterable) {
+		return transformType.apply(iterable, this);
+	}
 
 }

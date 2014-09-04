@@ -24,15 +24,10 @@ public class Transformer {
 		List<?> in = newArrayList(iterable);
 
 		for (StepFunction step: steps) {
-			in = applyStep(in, step);
+			in = step.apply(in);
 		}
 
 		return (List<OUT>) in;
-	}
-
-	@SuppressWarnings("unchecked")
-	private <IN, OUT> List<OUT> applyStep(Iterable<IN> iterable, StepFunction stepFunction) {
-		return stepFunction.getFunctionType().apply(iterable, stepFunction);
 	}
 
 

@@ -4,7 +4,7 @@ import java.util.List;
 
 import static com.google.common.collect.Lists.newArrayList;
 
-public enum FunctionType {
+public enum TransformType {
 	MAP {
 		@Override
 		public <IN, OUT> List<OUT> apply(Iterable<IN> iterable, StepFunction stepFunction) {
