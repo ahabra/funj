@@ -1,8 +1,11 @@
 package com.tek271.funj;
 
+import com.google.common.annotations.Beta;
+
 import static com.tek271.funj.ReflectionTools.callMethod;
 import static com.tek271.funj.ReflectionTools.callStatic;
 
+@Beta
 public class StepFunction {
 	private String staticPath;
 	private Object dynamicContext;
