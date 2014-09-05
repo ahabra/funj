@@ -36,6 +36,18 @@ public enum TransformType {
 			return list;
 		}
 	}
+
+//	REDUCE {
+//		@Override
+//		public <IN, OUT> List<OUT> apply(Iterable<IN> iterable, StepFunction stepFunction) {
+//			List<OUT> list = newArrayList();
+//			for (IN i: iterable) {
+//				Object temp= stepFunction.call(i);
+//				// TODO pass temp to next call
+//			}
+//			return list;
+//		}
+//	}
 	;
 
 	// TODO REDUCE, EXPAND ??

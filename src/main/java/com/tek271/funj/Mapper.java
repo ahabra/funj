@@ -1,6 +1,7 @@
 package com.tek271.funj;
 
 import com.google.common.collect.Maps;
+import com.google.common.collect.ObjectArrays;
 import com.google.common.collect.Sets;
 
 import java.util.List;
@@ -119,7 +120,7 @@ public class Mapper {
 		List<OUT> list = newArrayList();
 
 		for (IN i: iterable) {
-			Object[] args = ArrayTools.concat(i, extraArgs);
+			Object[] args = ObjectArrays.concat(i, extraArgs);
 			OUT mapped = call(context, callback, args);
 			list.add(mapped);
 		}

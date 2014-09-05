@@ -1,6 +1,7 @@
 package com.tek271.funj;
 
 import com.google.common.annotations.Beta;
+import com.google.common.collect.ObjectArrays;
 
 import java.util.List;
 
@@ -42,7 +43,17 @@ public class StepFunction {
 	}
 
 	public StepFunction extraArgs(Object... args) {
-		this.extraArgs = args;
+		if (ArrayTools.size(this.extraArgs) == 0) {
+			this.extraArgs = args;
+		} else {
+			this.extraArgs = ObjectArrays.concat(this.extraArgs, args, Object.class);
+		}
+
+		return this;
+	}
+
+	public StepFunction initialValueForMap(Object arg) {
+		this.extraArgs = new Object[] {arg};
 		return this;
 	}
 
@@ -73,7 +84,12 @@ public class StepFunction {
 	}
 
 	public <OUT> OUT call(Object arg) {
-		Object[] args = ArrayTools.concat(arg, extraArgs);
+		Object[] args;
+		if (ArrayTools.size(this.extraArgs) == 0) {
+			args = new Object[] {arg};
+		} else {
+			args = ObjectArrays.concat(arg, this.extraArgs);
+		}
 		return call(args);
 	}
 
