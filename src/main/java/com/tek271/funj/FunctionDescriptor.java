@@ -56,4 +56,17 @@ public class FunctionDescriptor {
 		return ReflectionTools.callMethod(dynamicContext, functionName, args);
 	}
 
+	@Override
+	public String toString() {
+		StringBuilder sb = new StringBuilder();
+		if (isStatic) {
+			sb.append("static ");
+			sb.append(staticPath);
+		} else {
+			sb.append(dynamicContext.getClass().getName());
+		}
+		sb.append('.').append(functionName);
+		return sb.toString();
+	}
+
 }

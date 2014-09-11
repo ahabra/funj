@@ -48,6 +48,18 @@ public class FunctionDescriptorTest {
 		assertEquals("ab", func.call("a", "b"));
 	}
 
+	@Test
+	public void toStringWithStaticFunction() {
+		FunctionDescriptor func = staticFunction(this.getClass(), "staticFunc");
+		assertEquals("static com.tek271.funj.FunctionDescriptorTest.staticFunc", func.toString());
+	}
+
+	@Test
+	public void toStringWithDynamicFunction() {
+		FunctionDescriptor func = dynamicFunction(this, "dynaFunc");
+		assertEquals("com.tek271.funj.FunctionDescriptorTest.dynaFunc", func.toString());
+	}
+
 	@SuppressWarnings("UnusedDeclaration")
 	public int dynaFunc(int a, int b) {
 		return a+b;
