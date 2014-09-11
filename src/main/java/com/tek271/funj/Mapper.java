@@ -77,8 +77,9 @@ public class Mapper {
 	 */
 	public static <IN, OUT> List<OUT> map(Iterable<IN> iterable, String staticCallbackFullName,
 																				Object... extraArgs) {
-		return doMap(iterable, null, staticCallbackFullName, extraArgs);
-	}
+		FunctionDescriptor func = FunctionDescriptor.staticFunction(staticCallbackFullName);
+		return map(iterable, func, extraArgs);
+	}  // TODO test this
 
 	/**
 	 * Map the objects in iterable into a list of objects by applying the callback on each object
@@ -93,8 +94,8 @@ public class Mapper {
 	 */
 	public static <IN, OUT> List<OUT> map(Iterable<IN> iterable, Class cls, String staticCallback,
 																				Object... extraArgs) {
-		String fullName = cls.getName() + "." + staticCallback;
-		return doMap(iterable, null, fullName, extraArgs);
+		FunctionDescriptor func = FunctionDescriptor.staticFunction(cls, staticCallback);
+		return map(iterable, func, extraArgs);
 	}
 
 	/**
@@ -112,26 +113,20 @@ public class Mapper {
 	 */
 	public static <IN, OUT> List<OUT> map(Iterable<IN> iterable, Object context, String callback,
 																				Object... extraArgs) {
-		return doMap(iterable, context, callback, extraArgs);
+		FunctionDescriptor func = FunctionDescriptor.dynamicFunction(context, callback);
+		return map(iterable, func, extraArgs);
 	}
 
-	private static <IN, OUT> List<OUT> doMap(Iterable<IN> iterable, Object context, String callback,
-																					 Object... extraArgs) {
+	public static <IN, OUT> List<OUT> map(Iterable<IN> iterable, FunctionDescriptor functionDescriptor,
+																				Object... extraArgs) {
 		List<OUT> list = newArrayList();
 
 		for (IN i: iterable) {
 			Object[] args = ObjectArrays.concat(i, extraArgs);
-			OUT mapped = call(context, callback, args);
+			OUT mapped = functionDescriptor.call(args);
 			list.add(mapped);
 		}
 		return list;
-	}
-
-	private static <OUT> OUT call(Object context, String callback, Object... args) {
-		if (context == null) {
-			return callStatic(callback, args);
-		}
-		return callMethod(context, callback, args);
 	}
 
 }
