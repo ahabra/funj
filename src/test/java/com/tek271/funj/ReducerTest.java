@@ -31,11 +31,40 @@ public class ReducerTest {
 		assertEquals(0, sum.intValue());
 	}
 
+	@Test
+	public void reduceRightAppliesFunctionAtEndOfList() {
+		List<Integer> list = Lists.newArrayList(10, 3, 1);
+		Integer sub = Reducer.reduceRight(list, new Substractor(), 16);
+		assertEquals(2, sub.intValue());
+	}
+
+	@Test
+	public void reduceRightReturnsInitialValueIfListIsEmpty() {
+		List<Integer> list = Lists.newArrayList();
+		Integer sub = Reducer.reduceRight(list, new Substractor(), 16);
+		assertEquals(16, sub.intValue());
+	}
+
+	@Test
+	public void reduceRightReturnsInitialValueIfListIsNull() {
+		List<Integer> list = Lists.newArrayList();
+		Integer sub = Reducer.reduceRight(list, new Substractor(), 16);
+		assertEquals(16, sub.intValue());
+	}
+
 	public class Adder implements ReduceFunction<Integer> {
 		@Override
 		public Integer reduceValue(Integer buffer, Integer value) {
 			return buffer + value;
 		}
 	}
+
+	public class Substractor implements ReduceFunction<Integer> {
+		@Override
+		public Integer reduceValue(Integer buffer, Integer value) {
+			return buffer - value;
+		}
+	}
+
 
 }
