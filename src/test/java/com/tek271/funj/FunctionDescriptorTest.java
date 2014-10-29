@@ -16,8 +16,8 @@ public class FunctionDescriptorTest {
 	@Test
 	public void dynamicFunctionCanBeCalled() {
 		FunctionDescriptor func = dynamicFunction(this, "dynaFunc");
-		int c = func.call(1, 2);
-		assertEquals(3, c);
+		Integer c = func.call(1, 2);
+		assertEquals(3, c.intValue());
 	}
 
 	@Test(expected = IllegalArgumentException.class)

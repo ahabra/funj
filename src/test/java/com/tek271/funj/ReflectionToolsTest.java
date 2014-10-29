@@ -39,8 +39,8 @@ public class ReflectionToolsTest {
 
 	@Test
 	public void getPropertyCanAccessFields() {
-		int id = ReflectionTools.getPropertyValue(zoo, "id");
-		assertEquals(1, id);
+		Integer id = ReflectionTools.getPropertyValue(zoo, "id");
+		assertEquals(1, id.intValue());
 	}
 
 	@Test
@@ -103,8 +103,8 @@ public class ReflectionToolsTest {
 	@Test
 	public void callStaticWillCallMethodWithArgs() {
 		String fullFunctionName = this.getClass().getName() + ".add";
-		int actual = ReflectionTools.callStatic(fullFunctionName, 10, 20);
-		assertEquals(30, actual);
+		Integer actual = ReflectionTools.callStatic(fullFunctionName, 10, 20);
+		assertEquals(30, actual.intValue());
 	}
 
 	@SuppressWarnings("UnusedDeclaration")
@@ -114,14 +114,14 @@ public class ReflectionToolsTest {
 
 	@Test
 	public void callStaticWithClassWillCallMethodWithArgs() {
-		int actual = ReflectionTools.callStatic(this.getClass(), "add", 10, 20);
-		assertEquals(30, actual);
+		Integer actual = ReflectionTools.callStatic(this.getClass(), "add", 10, 20);
+		assertEquals(30, actual.intValue());
 	}
 
 	@Test
 	public void callMethod() {
-		int actual = ReflectionTools.callMethod(this, "subt", 10, 4);
-		assertEquals(6, actual);
+		Integer actual = ReflectionTools.callMethod(this, "subt", 10, 4);
+		assertEquals(6, actual.intValue());
 	}
 
 	@SuppressWarnings("UnusedDeclaration")
