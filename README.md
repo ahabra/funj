@@ -9,7 +9,7 @@ To use with Maven:
 	<dependency>
 		<groupId>com.tek271</groupId>
 		<artifactId>funj</artifactId>
-		<version>1.0.0</version>
+		<version>1.0.2</version>
 	</dependency>
 ```
 
